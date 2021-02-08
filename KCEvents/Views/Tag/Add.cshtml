@@ -1,0 +1,18 @@
+﻿@using KCEvents.Models
+
+@model Tag
+
+<h1>Add Tag</h1>
+
+<form aps-controller="Tag" asp-action="Add" method="post">
+
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" />
+        <span asp-validation-for="Name"></span>
+    </div>
+
+
+    <input type="submit"  class="btn btn-primary mb-2" value="Add Tag" />
+
+</form>

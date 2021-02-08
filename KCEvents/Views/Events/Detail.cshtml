@@ -1,0 +1,101 @@
+﻿@using KCEvents.ViewModels
+@model EventDetailViewModel
+
+<h1>@Model.Name</h1>
+
+
+<div class="row">
+    <div class="col">
+<table class="table">
+    <tr>
+        <th>Event ID</th>
+        <td> @Model.EventId</td>
+    </tr>
+    <tr>
+        <th>Description</th>
+        <td> @Model.Description</td>
+    </tr>
+    <tr>
+        <th>Contact Email</th>
+        <td> @Model.ContactEmail</td>
+    </tr>
+    <tr>
+        <th>Category</th>
+        <td> @Model.CategoryName</td>
+    </tr>
+    <tr>
+        <th>Street</th>
+        <td> @Model.Street</td>
+    </tr>
+
+    <tr>
+        <th>City</th>
+        <td> @Model.City</td>
+    </tr>
+    <tr>
+        <th>State</th>
+        <td> @Model.State</td>
+    </tr>
+
+    <tr>
+        <th>Zip Code</th>
+        <td> @Model.Zipcode</td>
+    </tr>
+
+
+    @if (Model.TagText != null && Model.TagText != "")
+    {
+        <tr>
+            <th>Tags</th>
+            <td> @Model.TagText</td>
+        </tr>
+
+    }
+
+    else
+    {
+        <tr>
+            <td>
+                <a class="btn btn-warning" asp-controller="Tag" asp-action="AddEvent" asp-route-id="@Model.EventId">No tags! Please click here to add a tag</a>
+            </td>
+        </tr>
+    }
+
+</table>
+     </div>
+
+    <div class="col">
+     <img src="~/images/@Model.Picture" class="rounded-circle" height="40" width="40" asp-append-version="true" />
+    </div>
+
+ </div>
+
+
+<a class="btn btn-primary mb-2" asp-controller="Events" asp-action="Edit" asp-route-id="@Model.EventId">Edit Event</a>
+<a class="btn btn-danger mb-2" asp-controller="Events" asp-action="Delete" asp-route-id="@Model.EventId">Delete Event</a>
+
+
+<div id="GoogleMaps" style="width:50%;height:400px;"></div>
+
+<script>
+        function initMap() {
+            const map = new google.maps.Map(document.getElementById("GoogleMaps"), {
+                center: { lat: @Model.Latitude, lng: @Model.Longitude },
+                zoom: 14,
+            });
+
+            var marker = new google.maps.Marker({
+                position: { lat: @Model.Latitude, lng: @Model.Longitude },
+                map: map,
+                label: "@Model.Name",
+            });
+        }
+
+</script>
+
+<script defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqXHMNoJJwES8K9SkbOgKejtmsH52QlYo&callback=initMap&libraries=&v=weekly">
+</script>
+
+<br>
+<br>

@@ -1,0 +1,38 @@
+﻿@using KCEvents.Models
+@model List<EventCategory>
+
+<h1>Community Event Categories</h1>
+
+<div class="col-md-4">
+
+@if (Model.Count == 0)
+{
+
+    <h2 style="color:red">No event categories yet!</h2>
+
+    <a class="btn btn-primary mb-2" asp-controller="EventCategory" asp-action="Create"> Add Category </a>
+}
+else
+{
+    <table class="table table-striped" >
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Event Category</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var evt in Model)
+            {
+                <tr>
+                    <th scope="row">@evt.Id</th>
+                    <td>@evt.Name</td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+}
+
+</div>

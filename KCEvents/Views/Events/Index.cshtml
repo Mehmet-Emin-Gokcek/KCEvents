@@ -1,0 +1,94 @@
+﻿@using KCEvents.Models
+@model List<Event>
+
+<div class="container-fluid">
+
+<h1>Kansas City Community Events</h1><br>
+
+
+@if (Model.Count == 0)
+{
+    <h2 style="color:red">No events yet!</h2>
+
+    <a class="btn btn-primary mb-2" asp-controller="Events" asp-action="Add" > Add Event </a>
+
+}
+else
+{
+    <table class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Contact Email</th>
+                <th scope="col">Category</th>
+
+
+
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var evt in Model)
+            {
+                <tr>
+                    <th scope="row">@evt.Id</th>
+                    <td><a asp-controller="Events" asp-action="Detail" asp-route-id="@evt.Id">@evt.Name</a></td>
+                    <td>@evt.Description</td>
+                    <td>@evt.ContactEmail</td>
+                    <td>@evt.Category.Name</td>
+
+
+
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
+
+
+    <div id="GoogleMaps" style="width:50%;height:400px;"></div>
+
+    <script>
+    function initMap() {
+        var bounds = new google.maps.LatLngBounds();
+
+        const map = new google.maps.Map(document.getElementById("GoogleMaps"), {
+            zoom: 8,
+            center: { lat: @Model[0].Address.HomeLatitude, lng: @Model[0].Address.HomeLongitude },
+        });
+
+        bounds.extend({ lat:  @Model[0].Address.HomeLatitude, lng: @Model[0].Address.HomeLongitude});
+
+
+    @foreach (var item in Model)
+        {
+            <text>
+        var marker = new google.maps.Marker({
+            position: { lat: @item.Address.Latitude, lng: @item.Address.Longitude },
+            map: map,
+            label:"@item.Name",
+        });
+
+        bounds.extend({ lat: @item.Address.Latitude, lng: @item.Address.Longitude });
+            </text>
+        }
+        map.fitBounds(bounds);
+    }
+
+    </script>
+
+    <script defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqXHMNoJJwES8K9SkbOgKejtmsH52QlYo&callback=initMap&libraries=&v=weekly">
+    </script>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+}
+    </div>
