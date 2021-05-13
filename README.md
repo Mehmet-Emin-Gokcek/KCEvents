@@ -1,5 +1,7 @@
 # KCEvents
 
+A bulletin board to register and follow local community events built upon .Net Core Project with CRUD functionality, Social Media logins for Facebook and Google.
+
 
 ### Technologies:
 .NET Core
